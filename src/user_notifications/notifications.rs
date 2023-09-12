@@ -1,8 +1,8 @@
 //! Acts as a (currently dumb) wrapper for `UNMutableNotificationContent`, which is what you mostly
 //! need to pass to the notification center for things to work.
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, NSString};
@@ -10,7 +10,7 @@ use crate::foundation::{id, NSString};
 /// A wrapper for `UNMutableNotificationContent`. Retains the pointer from the Objective C side,
 /// and is ultimately dropped upon sending.
 #[derive(Debug)]
-pub struct Notification(pub Id<Object, Owned>);
+pub struct Notification(pub Id<NSMutableObject>);
 
 impl Notification {
     /// Constructs a new `Notification`. This allocates `NSString`'s, as it has to do so for the

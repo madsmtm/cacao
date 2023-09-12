@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use cacao::defaults::{UserDefaults, Value};
-use objc::runtime::Object;
+use objc::runtime::NSObject;
 
 const EXAMPLE: &str = "exampleSetting";
 

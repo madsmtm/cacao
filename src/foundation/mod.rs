@@ -65,7 +65,7 @@ pub fn to_bool(result: BOOL) -> bool {
 
 /// More or less maps over to Objective-C's `id` type, which... can really be anything.
 #[allow(non_camel_case_types)]
-pub type id = *mut runtime::Object;
+pub type id = *mut runtime::NSObject;
 
 /// Exactly what it sounds like.
 #[allow(non_upper_case_globals)]

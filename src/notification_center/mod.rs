@@ -17,8 +17,8 @@
 
 //use lazy_static::lazy_static;
 //use objc::{class, msg_send, msg_send_id, sel};
-//use objc::runtime::Object;
-//use objc::rc::{Id, Shared};
+//use objc::runtime::NSObject;
+//use objc::rc::{Id};
 
 mod name;
 pub use name::NotificationName;
@@ -42,7 +42,7 @@ pub use traits::Dispatcher;
 // default center; in the future it should aim to support custom variants.
 //#[derive(Debug)]
 //pub struct NotificationCenter {
-//    pub objc: Id<Object, Shared>,
+//    pub objc: Id<NSObject>,
 //pub subscribers: Mutex<HashMap<String, Vec<Dispatcher>>>
 //}
 

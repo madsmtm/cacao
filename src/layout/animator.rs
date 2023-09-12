@@ -1,5 +1,5 @@
 use icrate::Foundation::CGFloat;
-use objc::rc::{Id, Shared};
+use objc::rc::Id;
 use objc::runtime::{Class, Object};
 use objc::{msg_send, msg_send_id, sel};
 
@@ -7,7 +7,7 @@ use crate::foundation::id;
 
 /// A wrapper for an animation proxy object in Cocoa that supports basic animations.
 #[derive(Clone, Debug)]
-pub struct LayoutConstraintAnimatorProxy(pub Id<Object, Shared>);
+pub struct LayoutConstraintAnimatorProxy(pub Id<NSObject>);
 
 impl LayoutConstraintAnimatorProxy {
     /// Wraps and returns a proxy for animation of layout constraint values.

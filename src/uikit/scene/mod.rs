@@ -4,8 +4,8 @@
 //! iPad. In general, you probably won't need to tweak this though.
 
 use icrate::Foundation::NSRect;
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, sel};
 
 use crate::foundation::id;
@@ -30,7 +30,7 @@ mod session;
 pub use session::*;
 
 #[derive(Debug)]
-pub struct Scene(pub Id<Object, Owned>);
+pub struct Scene(pub Id<NSMutableObject>);
 
 impl Scene {
     pub fn with(scene: id) -> Self {

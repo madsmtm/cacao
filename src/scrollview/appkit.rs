@@ -7,7 +7,7 @@
 //! for in the modern era. It also implements a few helpers for things like setting a background
 //! color, and enforcing layer backing by default.
 
-use objc::rc::{Id, Owned};
+use objc::rc::Id;
 use objc::runtime::{Bool, Class, Object, Sel};
 use objc::sel;
 

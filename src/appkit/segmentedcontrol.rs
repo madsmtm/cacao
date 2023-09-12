@@ -7,7 +7,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 use objc::declare::ClassDecl;
-use objc::rc::{Id, Shared};
+use objc::rc::Id;
 use objc::runtime::{Class, Object, Sel};
 use objc::{class, msg_send, msg_send_id, sel};
 

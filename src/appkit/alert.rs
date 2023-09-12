@@ -24,8 +24,8 @@
 //! }
 //! ```
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, NSString};
@@ -33,7 +33,7 @@ use crate::foundation::{id, NSString};
 /// Represents an `NSAlert`. Has no information other than the retained pointer to the Objective C
 /// side, so... don't bother inspecting this.
 #[derive(Debug)]
-pub struct Alert(Id<Object, Owned>);
+pub struct Alert(Id<NSMutableObject>);
 
 impl Alert {
     /// Creates a basic `NSAlert`, storing a pointer to it in the Objective C runtime.

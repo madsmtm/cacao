@@ -1,6 +1,6 @@
 use icrate::Foundation::{NSRect, NSSize};
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 #[cfg(feature = "appkit")]
@@ -47,7 +47,7 @@ impl Default for PopoverConfig {
 #[derive(Debug)]
 pub struct Popover<Content> {
     /// A reference to the underlying Objective-C NSPopover
-    pub objc: Id<Object, Shared>,
+    pub objc: Id<NSObject>,
 
     /// The wrapped ViewController.
     pub view_controller: ViewController<Content>
@@ -60,7 +60,7 @@ where
     pub fn new(content: Content, config: PopoverConfig) -> Self {
         let view_controller = ViewController::new(content);
         let objc = unsafe {
-            let pop: Id<Object, Shared> = msg_send_id![class!(NSPopover), new];
+            let pop: Id<NSObject> = msg_send_id![class!(NSPopover), new];
             let _: () = msg_send![&pop, setContentSize: config.content_size];
             let _: () = msg_send![&pop, setBehavior: config.behaviour as i64];
             let _: () = msg_send![&pop, setAnimates: config.animates];

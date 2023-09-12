@@ -17,8 +17,8 @@ use std::ffi::c_void;
 use std::sync::{Arc, RwLock};
 
 use icrate::Foundation::CGFloat;
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::id;
@@ -84,7 +84,7 @@ pub enum Color {
     ///
     /// If you need to do custom work not covered by this enum, you can drop to
     /// the Objective-C level yourself and wrap your color in this.
-    Custom(Arc<RwLock<Id<Object, Owned>>>),
+    Custom(Arc<RwLock<Id<NSMutableObject>>>),
 
     /// The system-provided black. Harsh - you probably don't want to use this.
     SystemBlack,
@@ -350,7 +350,7 @@ impl Color {
         // am happy to do this for now and let someone who needs true dynamic allocation look into
         // it and PR it.
         Color::Custom(Arc::new(RwLock::new(unsafe {
-            let mut color: Id<Object, Owned> = msg_send_id![appkit_dynamic_color::register_class(), new];
+            let mut color: Id<NSMutableObject> = msg_send_id![appkit_dynamic_color::register_class(), new];
 
             color.set_ivar(AQUA_LIGHT_COLOR_NORMAL_CONTRAST, {
                 to_objc(&handler(Style {

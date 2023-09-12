@@ -1,7 +1,7 @@
 use std::ffi::c_void;
 
 use icrate::Foundation::{CGFloat, NSPoint, NSRect, NSSize};
-use objc::rc::{Id, Shared};
+use objc::rc::Id;
 use objc::runtime::{Bool, Class, Object};
 use objc::{class, msg_send, msg_send_id, sel};
 
@@ -115,7 +115,7 @@ pub struct DrawConfig {
 /// Wraps `NSImage` under AppKit, and `UIImage` on under UIKit (iOS and tvOS). Can be used to display images, icons,
 /// and so on.
 #[derive(Clone, Debug)]
-pub struct Image(pub Id<Object, Shared>);
+pub struct Image(pub Id<NSObject>);
 
 impl Image {
     fn class() -> &'static Class {

@@ -4,7 +4,7 @@
 use std::error::Error;
 use std::sync::{Arc, RwLock};
 
-use objc::rc::{Id, Owned};
+use objc::rc::Id;
 use objc::runtime::{Object, BOOL};
 use objc::{class, msg_send, msg_send_id, sel};
 use url::Url;
@@ -18,9 +18,9 @@ use crate::foundation::{id, nil, NSString, NSUInteger, NO};
 /// If your app is not sandboxed, you can use your favorite Rust library -
 /// but if you _are_ operating in the sandbox, there's a good chance you'll want to use this.
 ///
-/// @TODO: Couldn't this just be a Id<Object, Shared>?
+/// @TODO: Couldn't this just be a Id<NSObject>?
 #[derive(Clone, Debug)]
-pub struct FileManager(pub Arc<RwLock<Id<Object, Owned>>>);
+pub struct FileManager(pub Arc<RwLock<Id<NSMutableObject>>>);
 
 impl Default for FileManager {
     /// Returns a default file manager, which maps to the default system file manager. For common

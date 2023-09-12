@@ -2,8 +2,8 @@ use bitmask_enum::bitmask;
 use block::ConcreteBlock;
 
 use icrate::Foundation::NSPoint;
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::events::EventType;
@@ -54,11 +54,11 @@ pub enum EventMask {
 
 /// A wrapper over an `NSEvent`.
 #[derive(Debug)]
-pub struct EventMonitor(pub Id<Object, Owned>);
+pub struct EventMonitor(pub Id<NSMutableObject>);
 
 /// A wrapper over an `NSEvent`.
 #[derive(Debug)]
-pub struct Event(pub Id<Object, Owned>);
+pub struct Event(pub Id<NSMutableObject>);
 
 impl Event {
     pub(crate) fn new(objc: id) -> Self {

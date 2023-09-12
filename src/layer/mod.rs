@@ -13,8 +13,8 @@
 //! ```
 
 use icrate::Foundation::CGFloat;
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::id;
@@ -36,7 +36,7 @@ use crate::utils::properties::ObjcProperty;
 #[derive(Clone, Debug)]
 pub struct Layer {
     /// The underlying layer pointer.
-    pub objc: Id<Object, Shared>
+    pub objc: Id<NSObject>
 }
 
 impl Layer {
@@ -48,7 +48,7 @@ impl Layer {
     }
 
     /// Wraps an existing `CALayer`.
-    pub fn from_id(objc: Id<Object, Shared>) -> Self {
+    pub fn from_id(objc: Id<NSObject>) -> Self {
         Layer { objc }
     }
 

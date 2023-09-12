@@ -1,5 +1,5 @@
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, load_or_register_class, ClassMap, NSString};
@@ -10,7 +10,7 @@ use crate::uikit::scene::SessionRole;
 ///
 /// Due to the way we have to implement this, you likely never need to touch this.
 #[derive(Debug)]
-pub struct SceneConfig(pub Id<Object, Owned>);
+pub struct SceneConfig(pub Id<NSMutableObject>);
 
 impl SceneConfig {
     /// Creates a new `UISceneConfiguration` with the specified name and session role, retains it,

@@ -1,8 +1,8 @@
 use std::ffi::CStr;
 use std::os::raw::c_char;
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, to_bool, NSInteger, BOOL, NO, YES};
@@ -12,7 +12,7 @@ use crate::foundation::{id, to_bool, NSInteger, BOOL, NO, YES};
 /// In general we strive to avoid using this in the codebase, but it's a requirement for moving
 /// objects in and out of certain situations (e.g, `UserDefaults`).
 #[derive(Debug)]
-pub struct NSNumber(pub Id<Object, Owned>);
+pub struct NSNumber(pub Id<NSMutableObject>);
 
 impl NSNumber {
     /// If we're vended an NSNumber from a method (e.g, `NSUserDefaults` querying) we might want to

@@ -1,9 +1,6 @@
 use std::collections::HashMap;
 
-use objc::{
-    rc::{Id, Owned, Shared},
-    runtime::Object
-};
+use objc::{rc::Id, runtime::Object};
 
 use crate::foundation::{id, NSData, NSMutableDictionary, NSNumber, NSString};
 
@@ -137,7 +134,7 @@ impl Value {
     /// Shepherds `Value` types into `NSObject`s that can be stored in `NSUserDefaults`.
     // These currently work, but may not be exhaustive and should be looked over past the preview
     // period.
-    pub fn into_id(self) -> Id<Object, Owned> {
+    pub fn into_id(self) -> Id<NSMutableObject> {
         match self {
             Value::Bool(b) => NSNumber::bool(b).0,
             Value::String(s) => NSString::new(&s).objc,

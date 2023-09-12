@@ -5,8 +5,8 @@ use std::slice;
 
 use block::{Block, ConcreteBlock};
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, to_bool, NSUInteger, BOOL, NO, YES};
@@ -18,7 +18,7 @@ use crate::foundation::{id, to_bool, NSUInteger, BOOL, NO, YES};
 ///
 /// This is an intentionally limited API.
 #[derive(Debug)]
-pub struct NSData(pub Id<Object, Owned>);
+pub struct NSData(pub Id<NSMutableObject>);
 
 impl NSData {
     /// Given a vector of bytes, creates, retains, and returns a wrapped `NSData`.

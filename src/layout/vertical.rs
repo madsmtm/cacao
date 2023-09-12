@@ -1,5 +1,5 @@
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{msg_send, msg_send_id, sel};
 
 use crate::foundation::id;
@@ -13,13 +13,13 @@ pub enum LayoutAnchorY {
     Uninitialized,
 
     /// Represents a top anchor.
-    Top(Id<Object, Shared>),
+    Top(Id<NSObject>),
 
     /// Represents a bottom anchor.
-    Bottom(Id<Object, Shared>),
+    Bottom(Id<NSObject>),
 
     /// Represents a center anchor for the Y axis.
-    Center(Id<Object, Shared>)
+    Center(Id<NSObject>)
 }
 
 impl Default for LayoutAnchorY {
@@ -49,7 +49,7 @@ impl LayoutAnchorY {
     /// wrong.
     fn constraint_with<F>(&self, anchor_to: &LayoutAnchorY, handler: F) -> LayoutConstraint
     where
-        F: Fn(&Id<Object, Shared>, &Id<Object, Shared>) -> id
+        F: Fn(&Id<NSObject>, &Id<NSObject>) -> id
     {
         match (self, anchor_to) {
             (Self::Top(from), Self::Top(to))

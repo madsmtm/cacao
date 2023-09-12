@@ -39,8 +39,8 @@ use std::sync::{Arc, Mutex};
 
 use lazy_static::lazy_static;
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::appkit::menu::Menu;
@@ -88,11 +88,11 @@ pub(crate) fn shared_application<T, F: Fn(id) -> T>(handler: F) -> T {
 /// application.
 pub struct App<T = (), M = ()> {
     /// The underlying Objective-C Object.
-    pub objc: Id<Object, Owned>,
+    pub objc: Id<NSMutableObject>,
 
     /// The underlying Objective-C Object, which in this case is a delegate that forwards to the
     /// app delegate.
-    pub objc_delegate: Id<Object, Owned>,
+    pub objc_delegate: Id<NSMutableObject>,
 
     /// The stored `AppDelegate`.
     pub delegate: Box<T>,
@@ -150,7 +150,7 @@ where
 
         let objc_delegate = unsafe {
             let delegate_class = register_app_delegate_class::<T>();
-            let mut delegate: Id<Object, Owned> = msg_send_id![delegate_class, new];
+            let mut delegate: Id<NSMutableObject> = msg_send_id![delegate_class, new];
             let delegate_ptr: *const T = &*app_delegate;
             delegate.set_ivar(APP_PTR, delegate_ptr as usize);
             let _: () = msg_send![&*objc, setDelegate: &*delegate];

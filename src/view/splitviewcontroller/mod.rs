@@ -1,5 +1,5 @@
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::appkit::toolbar::ToolbarItem;
@@ -16,7 +16,7 @@ use crate::view::{View, ViewController, ViewDelegate};
 #[derive(Debug)]
 pub struct SplitViewItem<T> {
     /// The underlying Objective-C Object.
-    pub objc: Id<Object, Shared>,
+    pub objc: Id<NSObject>,
 
     /// The wrapped ViewController.
     pub view_controller: ViewController<T>
@@ -112,7 +112,7 @@ where
 #[derive(Debug)]
 pub struct SplitViewController<Sidebar, Content, Details> {
     /// A reference to the underlying Objective-C split view controller.
-    pub objc: Id<Object, Shared>,
+    pub objc: Id<NSObject>,
 
     /// A reference to the sidebar `SplitViewItem`.
     pub sidebar: SplitViewItem<Sidebar>,
@@ -186,7 +186,7 @@ impl<Sidebar, Content, Details> SplitViewController<Sidebar, Content, Details> {
 }
 
 impl<Sidebar, Content, Details> Controller for SplitViewController<Sidebar, Content, Details> {
-    fn get_backing_node(&self) -> Id<Object, Shared> {
+    fn get_backing_node(&self) -> Id<NSObject> {
         self.objc.clone()
     }
 }

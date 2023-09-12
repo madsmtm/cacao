@@ -1,5 +1,5 @@
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 /// A wrapper around `NSAutoReleasePool`. The core `App` structures create and manage one of these,
@@ -8,7 +8,7 @@ use objc::{class, msg_send, msg_send_id, sel};
 /// When this is dropped, we automatically send a `drain` message to the underlying pool. You can
 /// also call `drain()` yourself if you need to drain for whatever reason.
 #[derive(Debug)]
-pub struct AutoReleasePool(pub Id<Object, Owned>);
+pub struct AutoReleasePool(pub Id<NSMutableObject>);
 
 impl AutoReleasePool {
     /// Creates and returns a new `AutoReleasePool`. You need to take care to keep this alive for

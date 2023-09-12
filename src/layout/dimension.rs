@@ -1,6 +1,6 @@
 use icrate::Foundation::CGFloat;
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, nil, NSInteger};
@@ -11,7 +11,7 @@ use super::attributes::{LayoutAttribute, LayoutRelation};
 /// A wrapper for `NSLayoutAnchor`. You should never be creating this yourself - it's more of a
 /// factory/helper for creating `LayoutConstraint` objects based on your views.
 #[derive(Clone, Debug, Default)]
-pub struct LayoutAnchorDimension2(pub Option<Id<Object, Shared>>);
+pub struct LayoutAnchorDimension2(pub Option<Id<NSObject>>);
 
 /// A wrapper for `NSLayoutAnchorDimension`, which is typically used to handle `width` and `height`
 /// values for how a given view should layout.
@@ -21,10 +21,10 @@ pub enum LayoutAnchorDimension {
     Uninitialized,
 
     /// Represents a Width anchor.
-    Width(Id<Object, Shared>),
+    Width(Id<NSObject>),
 
     /// Represents a Height anchor.
-    Height(Id<Object, Shared>)
+    Height(Id<NSObject>)
 }
 
 impl Default for LayoutAnchorDimension {
@@ -86,7 +86,7 @@ impl LayoutAnchorDimension {
     /// wrong.
     fn constraint_with<F>(&self, anchor_to: &LayoutAnchorDimension, handler: F) -> LayoutConstraint
     where
-        F: Fn(&Id<Object, Shared>, &Id<Object, Shared>) -> id
+        F: Fn(&Id<NSObject>, &Id<NSObject>) -> id
     {
         match (self, anchor_to) {
             (Self::Width(from), Self::Width(to))

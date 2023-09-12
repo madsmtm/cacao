@@ -1,5 +1,5 @@
 use objc::declare::ClassDecl;
-use objc::rc::{Id, Owned};
+use objc::rc::Id;
 use objc::runtime::{Class, Object, Sel, BOOL};
 use objc::{class, sel};
 

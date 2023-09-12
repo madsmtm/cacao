@@ -1,6 +1,6 @@
 use icrate::Foundation::NSRect;
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::id;
@@ -9,7 +9,7 @@ use crate::uikit::Scene;
 use crate::utils::Controller;
 
 #[derive(Debug)]
-pub struct Window(pub Id<Object, Owned>);
+pub struct Window(pub Id<NSMutableObject>);
 
 impl Window {
     pub fn new(frame: Rect) -> Self {

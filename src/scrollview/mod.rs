@@ -42,7 +42,7 @@
 //!
 //! For more information on Autolayout, view the module or check out the examples folder.
 
-use objc::rc::{Id, Shared};
+use objc::rc::Id;
 use objc::runtime::{Class, Object};
 use objc::{msg_send, sel};
 

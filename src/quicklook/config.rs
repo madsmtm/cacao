@@ -1,8 +1,8 @@
 use std::path::Path;
 
 use icrate::Foundation::{CGFloat, NSSize};
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, sel};
 
 use crate::foundation::{id, NSString, NSUInteger, YES};

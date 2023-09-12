@@ -3,7 +3,7 @@
 use std::ops::Deref;
 
 use icrate::Foundation::CGFloat;
-use objc::rc::{Id, Shared};
+use objc::rc::Id;
 use objc::runtime::{Class, Object};
 use objc::{class, msg_send, msg_send_id, sel};
 
@@ -13,7 +13,7 @@ use crate::utils::os;
 /// A `Font` can be constructed and applied to supported controls to control things like text
 /// appearance and size.
 #[derive(Clone, Debug)]
-pub struct Font(pub Id<Object, Shared>);
+pub struct Font(pub Id<NSObject>);
 
 impl Default for Font {
     /// Returns the default `labelFont` on macOS.

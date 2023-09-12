@@ -1,4 +1,4 @@
-use objc::rc::{Id, Shared};
+use objc::rc::Id;
 use objc::runtime::{Class, Object};
 use objc::{msg_send, msg_send_id, sel};
 

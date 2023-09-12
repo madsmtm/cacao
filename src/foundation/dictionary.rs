@@ -1,15 +1,15 @@
 use std::collections::HashMap;
 use std::ops::{Deref, DerefMut};
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, NSString};
 
 /// A wrapper for `NSMutableDictionary`.
 #[derive(Debug)]
-pub struct NSMutableDictionary(pub Id<Object, Owned>);
+pub struct NSMutableDictionary(pub Id<NSMutableObject>);
 
 impl Default for NSMutableDictionary {
     /// Returns a blank NSMutableDictionary.

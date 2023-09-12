@@ -1,4 +1,4 @@
-use objc::runtime::Object;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, sel};
 
 use crate::foundation::{id, NSUInteger, NO, YES};

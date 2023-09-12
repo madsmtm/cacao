@@ -1,11 +1,11 @@
 use std::ffi::c_void;
 
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id};
 
 #[derive(Debug)]
-pub(crate) struct GraphicsContext(pub Id<Object, Shared>);
+pub(crate) struct GraphicsContext(pub Id<NSObject>);
 
 impl GraphicsContext {
     pub(crate) fn current() -> Self {

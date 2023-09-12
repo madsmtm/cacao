@@ -1,12 +1,12 @@
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, NSString};
 use crate::uikit::scene::enums::SessionRole;
 
 #[derive(Debug)]
-pub struct SceneSession(pub Id<Object, Owned>);
+pub struct SceneSession(pub Id<NSMutableObject>);
 
 impl SceneSession {
     pub fn with(session: id) -> Self {

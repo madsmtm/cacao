@@ -16,7 +16,7 @@
 //! ```
 
 use icrate::Foundation::CGFloat;
-use objc::rc::{Id, Shared};
+use objc::rc::Id;
 use objc::runtime::{Class, Object};
 use objc::{class, msg_send, sel};
 

@@ -1,5 +1,5 @@
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use block::ConcreteBlock;
@@ -39,7 +39,7 @@ impl From<RowActionStyle> for NSUInteger {
 /// on a ListViewRow. You return this from the appropriate delegate method,
 /// and the system will handle displaying the necessary pieces for you.
 #[derive(Debug)]
-pub struct RowAction(pub Id<Object, Owned>);
+pub struct RowAction(pub Id<NSMutableObject>);
 
 impl RowAction {
     /// Creates and returns a new `RowAction`. You'd use this handler to

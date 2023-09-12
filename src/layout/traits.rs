@@ -2,8 +2,8 @@
 //! heirarchies.
 
 use icrate::Foundation::{CGFloat, NSRect};
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{msg_send, sel};
 
 use crate::foundation::{id, nil, to_bool, NSArray, NSString, NO, YES};

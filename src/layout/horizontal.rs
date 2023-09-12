@@ -1,5 +1,5 @@
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{msg_send, msg_send_id, sel};
 
 use crate::foundation::id;
@@ -16,19 +16,19 @@ pub enum LayoutAnchorX {
     Uninitialized,
 
     /// Represents a leading anchor; side depends on system orientation.
-    Leading(Id<Object, Shared>),
+    Leading(Id<NSObject>),
 
     /// Represents a left anchor.
-    Left(Id<Object, Shared>),
+    Left(Id<NSObject>),
 
     /// Represents a trailing anchor; side depends on system orientation.
-    Trailing(Id<Object, Shared>),
+    Trailing(Id<NSObject>),
 
     /// Represents a right anchor.
-    Right(Id<Object, Shared>),
+    Right(Id<NSObject>),
 
     /// Represents a center anchor on the X axis.
-    Center(Id<Object, Shared>)
+    Center(Id<NSObject>)
 }
 
 impl Default for LayoutAnchorX {
@@ -69,7 +69,7 @@ impl LayoutAnchorX {
     /// wrong.
     fn constraint_with<F>(&self, anchor_to: &LayoutAnchorX, handler: F) -> LayoutConstraint
     where
-        F: Fn(&Id<Object, Shared>, &Id<Object, Shared>) -> id
+        F: Fn(&Id<NSObject>, &Id<NSObject>) -> id
     {
         match (self, anchor_to) {
             // The anchors that can connect to each other. These blocks could be condensed, but are

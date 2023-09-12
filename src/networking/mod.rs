@@ -1,7 +1,7 @@
 //! A lightweight wrapper over some networking components, like `NSURLRequest` and co.
 //!
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 /// At the moment, this is mostly used for inspection of objects returned from system
 /// calls, as `NSURL` is pervasive in some filesystem references. Over time this may grow to
 /// include a proper networking stack, but the expectation for v0.1 is that most apps will want to
@@ -12,7 +12,7 @@ use crate::foundation::{id, NSString};
 
 /// A wrapper around `NSURLRequest`.
 #[derive(Debug)]
-pub struct URLRequest(Id<Object, Shared>);
+pub struct URLRequest(Id<NSObject>);
 
 impl URLRequest {
     /// Wraps and retains an `NSURLRequest`.

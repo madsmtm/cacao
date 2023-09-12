@@ -1,10 +1,11 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 
 use crate::foundation::id;
+use crate::utils::NSMutableObject;
 
 /// A wrapper for single-threaded `ObjcProperty` types.
 ///
@@ -15,12 +16,12 @@ use crate::foundation::id;
 /// It is possible we could remove the `Id` wrapper in here if we're just doing this ourselves, and
 /// is probably worth investigating at some point.
 #[derive(Clone, Debug)]
-pub struct ObjcProperty(Rc<RefCell<Id<Object, Owned>>>);
+pub struct ObjcProperty(Rc<RefCell<Id<NSMutableObject>>>);
 
 impl ObjcProperty {
     /// Given an Objective-C object, retains it and wraps it as a `Property`.
     pub fn retain(obj: id) -> Self {
-        ObjcProperty(Rc::new(RefCell::new(unsafe { Id::retain(obj).unwrap() })))
+        ObjcProperty(Rc::new(RefCell::new(unsafe { Id::retain(obj.cast()).unwrap() })))
     }
 
     /// Runs a handler with mutable access for the underlying Objective-C object.
@@ -29,7 +30,7 @@ impl ObjcProperty {
     /// on the Objective-C side as well, but there be dragons.
     pub fn with_mut<F: Fn(id)>(&self, handler: F) {
         let mut obj = self.0.borrow_mut();
-        handler(&mut **obj);
+        handler(&mut ***obj);
     }
 
     /// Runs a handler with the underlying Objective-C type.

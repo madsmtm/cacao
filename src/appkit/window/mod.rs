@@ -11,8 +11,8 @@
 use block::ConcreteBlock;
 
 use icrate::Foundation::{CGFloat, NSRect, NSSize};
-use objc::rc::{Id, Owned, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::appkit::toolbar::{Toolbar, ToolbarDelegate};
@@ -45,7 +45,7 @@ pub(crate) static WINDOW_DELEGATE_PTR: &str = "rstWindowDelegate";
 #[derive(Debug)]
 pub struct Window<T = ()> {
     /// Represents an `NS/UIWindow` in the Objective-C runtime.
-    pub objc: Id<Object, Shared>,
+    pub objc: Id<NSObject>,
 
     /// A delegate for this window.
     pub delegate: Option<Box<T>>
@@ -130,7 +130,7 @@ where
         let class = register_window_class_with_delegate::<T>(&delegate);
         let mut delegate = Box::new(delegate);
 
-        let objc: Id<Object, Shared> = unsafe {
+        let objc: Id<NSObject> = unsafe {
             // This behavior might make sense to keep as default (YES), but I think the majority of
             // apps that would use this toolkit wouldn't be tab-oriented...
             let _: () = msg_send![class!(NSWindow), setAllowsAutomaticWindowTabbing: NO];
@@ -139,7 +139,7 @@ where
             // NeXTSTEP era, and are outright deprecated... so we don't allow setting them.
             let buffered: NSUInteger = 2;
             let dimensions: NSRect = config.initial_dimensions.into();
-            let mut window: Id<Object, Owned> = msg_send_id![
+            let mut window: Id<NSMutableObject> = msg_send_id![
                 msg_send_id![class, alloc],
                 initWithContentRect: dimensions,
                 styleMask: config.style,
@@ -290,7 +290,7 @@ impl<T> Window<T> {
     }
 
     /// Used for setting a toolbar on this window.
-    pub fn toolbar(&self) -> Id<Object, Shared> {
+    pub fn toolbar(&self) -> Id<NSObject> {
         unsafe { msg_send_id![&self.objc, toolbar] }
     }
 

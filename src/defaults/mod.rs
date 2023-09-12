@@ -34,8 +34,8 @@
 
 use std::collections::HashMap;
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, nil, to_bool, NSData, NSMutableDictionary, NSNumber, NSString, BOOL, NO, YES};
@@ -48,7 +48,7 @@ pub use value::Value;
 ///
 /// This should not be used for sensitive data - use the Keychain for that.
 #[derive(Debug)]
-pub struct UserDefaults(pub Id<Object, Owned>);
+pub struct UserDefaults(pub Id<NSMutableObject>);
 
 impl Default for UserDefaults {
     /// Equivalent to calling `UserDefaults::standard()`.

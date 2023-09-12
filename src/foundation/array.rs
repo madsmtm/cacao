@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::id;
@@ -11,7 +11,7 @@ use crate::foundation::id;
 /// ever deemed necessary (unlikely, given how much Apple has optimized the Foundation classes, but
 /// still...).
 #[derive(Debug)]
-pub struct NSArray(pub Id<Object, Owned>);
+pub struct NSArray(pub Id<NSMutableObject>);
 
 impl NSArray {
     /// Given a set of `Object`s, creates and retains an `NSArray` that holds them.

@@ -2,7 +2,7 @@ use cacao::layout::{Layout, LayoutConstraint};
 use cacao::switch::Switch;
 use cacao::text::Label;
 use cacao::view::View;
-use objc::runtime::Object;
+use objc::runtime::NSObject;
 
 /// A reusable widget for a toggle; this is effectively a standard checkbox/label combination for
 /// toggling a boolean value.

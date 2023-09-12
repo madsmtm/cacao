@@ -2,10 +2,10 @@
 //! belong to. These are typically internal, and if you rely on them... well, don't be surprised if
 //! they go away one day.
 
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
-use objc::{class, msg_send, sel};
-use objc::{Encode, Encoding};
+use objc::rc::Id;
+use objc::runtime::{AnyObject, NSObject};
+use objc::{class, msg_send, mutability, sel};
+use objc::{extern_class, ClassType};
 
 use crate::foundation::{id, BOOL, NO, YES};
 
@@ -19,7 +19,7 @@ pub mod properties;
 /// a guard for whether something is a (View|Window|etc)Controller.
 pub trait Controller {
     /// Returns the underlying Objective-C object.
-    fn get_backing_node(&self) -> Id<Object, Shared>;
+    fn get_backing_node(&self) -> Id<NSObject>;
 }
 
 /// Utility method for taking a pointer and grabbing the corresponding delegate in Rust. This is
@@ -38,7 +38,7 @@ pub trait Controller {
 ///
 /// This is, like much in this framework, subject to revision pending more thorough testing and
 /// checking.
-pub fn load<'a, T>(this: &'a Object, ptr_name: &str) -> &'a T {
+pub fn load<'a, T>(this: &'a AnyObject, ptr_name: &str) -> &'a T {
     unsafe {
         let ptr: usize = *this.get_ivar(ptr_name);
         let obj = ptr as *const T;
@@ -83,3 +83,14 @@ pub fn activate_cocoa_multithreading() {
         let _: () = msg_send![thread, start];
     }
 }
+
+extern_class!(
+    #[derive(Debug, PartialEq, Hash)]
+    pub struct NSMutableObject;
+
+    unsafe impl ClassType for NSMutableObject {
+        type Super = NSObject;
+        type Mutability = mutability::Mutable;
+        const NAME: &'static str = "NSObject";
+    }
+);

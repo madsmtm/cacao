@@ -3,8 +3,8 @@ use std::ops::{Deref, DerefMut};
 use std::os::raw::{c_char, c_void};
 use std::{fmt, slice, str};
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, to_bool, BOOL, NO, YES};
@@ -18,7 +18,7 @@ const UTF8_ENCODING: usize = 4;
 #[derive(Debug)]
 pub struct NSString<'a> {
     /// A reference to the backing `NSString`.
-    pub objc: Id<Object, Owned>,
+    pub objc: Id<NSMutableObject>,
     phantom: PhantomData<&'a ()>
 }
 
@@ -67,7 +67,7 @@ impl<'a> NSString<'a> {
         }
     }
 
-    pub fn from_id(objc: Id<Object, Owned>) -> Self {
+    pub fn from_id(objc: Id<NSMutableObject>) -> Self {
         Self {
             objc,
             phantom: PhantomData

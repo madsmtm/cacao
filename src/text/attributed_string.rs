@@ -4,12 +4,13 @@ use std::os::raw::c_char;
 use std::{fmt, slice, str};
 
 use icrate::Foundation::NSRange;
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::color::Color;
 use crate::foundation::{id, NSString};
+use crate::utils::NSMutableObject;
 
 use super::Font;
 
@@ -21,7 +22,7 @@ extern "C" {
 /// A wrapper around `NSMutableAttributedString`, which can be used for more complex text
 /// rendering.
 ///
-pub struct AttributedString(pub Id<Object, Owned>);
+pub struct AttributedString(pub Id<NSMutableObject>);
 
 impl AttributedString {
     /// Creates a blank AttributedString. Internally, this allocates an

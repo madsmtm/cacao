@@ -1,8 +1,8 @@
 //! A wrapper for `WKWebViewConfiguration`. It aims to (mostly) cover
 //! the important pieces of configuring and updating a WebView configuration.
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, NSInteger, NSString, NO, YES};
@@ -12,7 +12,7 @@ use crate::webview::enums::InjectAt;
 /// where everything lives.
 #[derive(Debug)]
 pub struct WebViewConfig {
-    pub objc: Id<Object, Owned>,
+    pub objc: Id<NSMutableObject>,
     pub handlers: Vec<String>,
     pub protocols: Vec<String>
 }

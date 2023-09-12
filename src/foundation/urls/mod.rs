@@ -3,8 +3,8 @@ use std::marker::PhantomData;
 use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
 
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, nil, NSData, NSString, NSUInteger};
@@ -31,7 +31,7 @@ pub use resource_keys::{NSURLFileResource, NSURLResourceKey, NSUbiquitousItemDow
 #[derive(Clone, Debug)]
 pub struct NSURL<'a> {
     /// A reference to the backing `NSURL`.
-    pub objc: Id<Object, Shared>,
+    pub objc: Id<NSObject>,
     phantom: PhantomData<&'a ()>
 }
 

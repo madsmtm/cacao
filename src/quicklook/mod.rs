@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use block::ConcreteBlock;
@@ -14,7 +14,7 @@ mod config;
 pub use config::{ThumbnailConfig, ThumbnailQuality};
 
 #[derive(Debug)]
-pub struct ThumbnailGenerator(pub Id<Object, Shared>);
+pub struct ThumbnailGenerator(pub Id<NSObject>);
 
 impl ThumbnailGenerator {
     /// Returns the global shared, wrapped, QLThumbnailGenerator.

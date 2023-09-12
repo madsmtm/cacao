@@ -1,12 +1,12 @@
 use std::convert::TryFrom;
 
-use objc::rc::{Id, Shared};
+use objc::rc::Id;
 use objc::{class, msg_send, msg_send_id, runtime::Object, sel};
 
 use crate::foundation::NSUInteger;
 
 #[derive(Clone, Debug)]
-pub struct HapticFeedbackPerformer(pub Id<Object, Shared>);
+pub struct HapticFeedbackPerformer(pub Id<NSObject>);
 
 impl HapticFeedbackPerformer {
     pub fn perform(&self, pattern: FeedbackPattern, performance_time: PerformanceTime) {

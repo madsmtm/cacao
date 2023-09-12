@@ -6,8 +6,8 @@
 use std::fmt;
 
 use icrate::Foundation::NSSize;
-use objc::rc::{Id, Owned, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::appkit::segmentedcontrol::SegmentedControl;
@@ -20,7 +20,7 @@ use crate::invoker::TargetActionHandler;
 #[derive(Debug)]
 pub struct ToolbarItem {
     pub identifier: String,
-    pub objc: Id<Object, Owned>,
+    pub objc: Id<NSMutableObject>,
     pub button: Option<Button>,
     pub segmented_control: Option<SegmentedControl>,
     pub image: Option<Image>,

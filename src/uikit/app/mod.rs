@@ -37,7 +37,7 @@
 use libc::{c_char, c_int};
 use std::ffi::CString;
 
-use objc::runtime::Object;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, sel};
 
 use crate::foundation::{id, nil, AutoReleasePool, NSString, NSUInteger, NO, YES};

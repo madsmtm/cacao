@@ -1,5 +1,5 @@
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, sel};
 
 use crate::foundation::{id, NSString};
@@ -8,7 +8,7 @@ use crate::foundation::{id, NSString};
 ///
 /// Due to the way we have to implement this, you likely never need to touch this.
 #[derive(Debug)]
-pub struct SceneConnectionOptions(Id<Object, Owned>);
+pub struct SceneConnectionOptions(Id<NSMutableObject>);
 
 impl SceneConnectionOptions {
     pub fn with(opts: id) -> Self {

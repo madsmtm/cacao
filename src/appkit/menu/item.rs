@@ -4,7 +4,7 @@
 
 use std::fmt;
 
-use objc::rc::{Id, Owned};
+use objc::rc::Id;
 use objc::runtime::{Class, Object, Sel};
 use objc::{class, msg_send, msg_send_id, sel};
 
@@ -37,7 +37,7 @@ fn make_menu_item<S: AsRef<str>>(
     key: Option<&str>,
     action: Option<Sel>,
     modifiers: Option<&[EventModifierFlag]>
-) -> Id<Object, Owned> {
+) -> Id<NSMutableObject> {
     unsafe {
         let title = NSString::new(title.as_ref());
 
@@ -90,7 +90,7 @@ pub enum MenuItem {
     /// You can (and should) create this variant via the `new(title)` method, but if you need to do
     /// something crazier, then wrap it in this and you can hook into the Cacao menu system
     /// accordingly.
-    Custom(Id<Object, Owned>),
+    Custom(Id<NSMutableObject>),
 
     /// Shows a standard "About" item,  which will bring up the necessary window when clicked
     /// (include a `credits.html` in your App to make use of here). The argument baked in here
@@ -157,7 +157,7 @@ pub enum MenuItem {
 impl MenuItem {
     /// Consumes and returns a handle for the underlying MenuItem. This is internal as we make a few assumptions
     /// for how it interacts with our `Menu` setup, but this could be made public in the future.
-    pub(crate) unsafe fn to_objc(self) -> Id<Object, Owned> {
+    pub(crate) unsafe fn to_objc(self) -> Id<NSMutableObject> {
         match self {
             Self::Custom(objc) => objc,
 

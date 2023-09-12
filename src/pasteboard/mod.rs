@@ -15,8 +15,8 @@
 
 use std::path::PathBuf;
 
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 use url::Url;
 
@@ -28,7 +28,7 @@ pub use types::{PasteboardName, PasteboardType};
 
 /// Represents an `NSPasteboard`, enabling you to handle copy/paste/drag and drop.
 #[derive(Debug)]
-pub struct Pasteboard(pub Id<Object, Shared>);
+pub struct Pasteboard(pub Id<NSObject>);
 
 impl Default for Pasteboard {
     /// Returns the default system pasteboard (the "general" pasteboard).

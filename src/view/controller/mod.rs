@@ -1,5 +1,5 @@
-use objc::rc::{Id, Owned, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{msg_send, msg_send_id, sel};
 
 use crate::foundation::id;
@@ -37,7 +37,7 @@ mod native_interface;
 #[derive(Debug)]
 pub struct ViewController<T> {
     /// The underlying Objective-C pointer.
-    pub objc: Id<Object, Shared>,
+    pub objc: Id<NSObject>,
 
     /// The underlying View that we manage.
     pub view: View<T>
@@ -53,7 +53,7 @@ where
         let view = View::with(delegate);
 
         let objc = unsafe {
-            let mut vc: Id<Object, Owned> = msg_send_id![class, new];
+            let mut vc: Id<NSMutableObject> = msg_send_id![class, new];
 
             if let Some(delegate) = &view.delegate {
                 let ptr: *const T = &**delegate;
@@ -72,7 +72,7 @@ where
 }
 
 impl<T> Controller for ViewController<T> {
-    fn get_backing_node(&self) -> Id<Object, Shared> {
+    fn get_backing_node(&self) -> Id<NSObject> {
         self.objc.clone()
     }
 }

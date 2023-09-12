@@ -3,8 +3,8 @@
 //! by an axis).
 
 use icrate::Foundation::CGFloat;
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, sel};
 
 use crate::foundation::{id, NO, YES};
@@ -19,7 +19,7 @@ use super::LayoutConstraintAnimatorProxy;
 pub struct LayoutConstraint {
     /// A shared pointer to the underlying view. Provided your view isn't dropped, this will always
     /// be valid.
-    pub constraint: Id<Object, Shared>,
+    pub constraint: Id<NSObject>,
 
     /// The offset used in computing this constraint.
     pub offset: f64,
@@ -92,7 +92,7 @@ impl LayoutConstraint {
 
     /// Call this with your batch of constraints to activate them.
     // If you're astute, you'll note that, yes... this is kind of hacking around some
-    // borrowing rules with how objc::rc::{Id, Owned}/objc::rc::{Id, Shared} works. In this case, to
+    // borrowing rules with how objc::rc::{Id}/objc::rc::{Id} works. In this case, to
     // support the way autolayout constraints work over in the cocoa runtime, we need to be
     // able to clone these and pass them around... while also getting certain references to
     // them.

@@ -9,7 +9,7 @@
 
 use std::os::raw::c_void;
 
-use objc::rc::{Id, Owned};
+use objc::rc::Id;
 use objc::runtime::{Bool, Class, Object, Sel};
 use objc::{class, msg_send, sel};
 

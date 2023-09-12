@@ -1,7 +1,7 @@
 //! This module includes wrappers for `CKShare` and `CKShareMetaData`.
 
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 
 use crate::foundation::id;
 
@@ -9,7 +9,7 @@ use crate::foundation::id;
 /// to, say, handle accepting an invite for a share.
 #[derive(Clone, Debug)]
 pub struct CKShareMetaData {
-    pub inner: Id<Object, Shared>
+    pub inner: Id<NSObject>
 }
 
 impl CKShareMetaData {

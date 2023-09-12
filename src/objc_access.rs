@@ -2,7 +2,7 @@
 //! defined on here provide access handlers for common properties that the sub-traits need to
 //! enable modifying.
 
-use objc::runtime::Object;
+use objc::runtime::NSObject;
 
 use crate::foundation::id;
 

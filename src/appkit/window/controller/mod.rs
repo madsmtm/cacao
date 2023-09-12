@@ -30,8 +30,8 @@
 
 use std::fmt;
 
-use objc::rc::{Id, Owned};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{msg_send, msg_send_id, sel};
 
 use crate::appkit::window::{Window, WindowConfig, WindowDelegate, WINDOW_DELEGATE_PTR};
@@ -45,7 +45,7 @@ use class::register_window_controller_class;
 /// provides some extra lifecycle methods.
 pub struct WindowController<T> {
     /// A handler to the underlying `NSWindowController`.
-    pub objc: Id<Object, Owned>,
+    pub objc: Id<NSMutableObject>,
 
     /// The underlying `Window` that this controller wraps.
     pub window: Window<T>
@@ -63,7 +63,7 @@ where
         let objc = unsafe {
             let window_controller_class = register_window_controller_class::<T>();
             let controller_alloc = msg_send_id![window_controller_class, alloc];
-            let mut controller: Id<Object, Owned> = msg_send_id![controller_alloc, initWithWindow: &*window.objc];
+            let mut controller: Id<NSMutableObject> = msg_send_id![controller_alloc, initWithWindow: &*window.objc];
 
             if let Some(delegate) = &window.delegate {
                 let ptr: *const T = &**delegate;

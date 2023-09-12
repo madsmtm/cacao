@@ -2,8 +2,8 @@
 
 use std::sync::{Arc, Mutex};
 
-use objc::rc::{Id, Owned, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::appkit::menu::item::MenuItem;
@@ -12,7 +12,7 @@ use crate::foundation::{id, NSInteger, NSString};
 /// A struct that represents an `NSMenu`. It takes ownership of items, and handles instrumenting
 /// them throughout the application lifecycle.
 #[derive(Debug)]
-pub struct Menu(pub Id<Object, Owned>);
+pub struct Menu(pub Id<NSMutableObject>);
 
 impl Menu {
     /// Creates a new `Menu` with the given title, and uses the passed items as submenu items.

@@ -6,8 +6,8 @@ use std::path::PathBuf;
 
 use block::ConcreteBlock;
 
-use objc::rc::{Id, Shared};
-use objc::runtime::Object;
+use objc::rc::Id;
+use objc::runtime::NSObject;
 use objc::{class, msg_send, msg_send_id, sel};
 
 use crate::filesystem::enums::ModalResponse;
@@ -19,10 +19,10 @@ use crate::appkit::window::{Window, WindowDelegate};
 #[derive(Debug)]
 pub struct FileSelectPanel {
     /// The internal Objective C `NSOpenPanel` instance.
-    pub panel: Id<Object, Shared>,
+    pub panel: Id<NSObject>,
 
     /// The internal `NSObject` that routes delegate callbacks around.
-    pub delegate: Id<Object, Shared>,
+    pub delegate: Id<NSObject>,
 
     /// Whether the user can choose files. Defaults to `true`.
     pub can_choose_files: bool,
