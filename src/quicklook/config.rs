@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use objc::foundation::{CGFloat, NSSize};
+use icrate::Foundation::{CGFloat, NSSize};
 use objc::rc::{Id, Shared};
 use objc::runtime::Object;
 use objc::{class, msg_send, sel};

@@ -3,7 +3,7 @@
 //! This is required for things like having multiple instances of your app in the app switcher on
 //! iPad. In general, you probably won't need to tweak this though.
 
-use objc::foundation::NSRect;
+use icrate::Foundation::NSRect;
 use objc::rc::{Id, Owned};
 use objc::runtime::Object;
 use objc::{class, msg_send, sel};

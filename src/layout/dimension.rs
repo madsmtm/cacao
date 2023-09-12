@@ -1,4 +1,4 @@
-use objc::foundation::CGFloat;
+use icrate::Foundation::CGFloat;
 use objc::rc::{Id, Shared};
 use objc::runtime::Object;
 use objc::{class, msg_send, msg_send_id, sel};

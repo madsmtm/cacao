@@ -20,8 +20,8 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 bitmask-enum = "2.2.1"
-objc = { version = "=0.3.0-beta.2", package = "objc2" }
-block = { version = "=0.2.0-alpha.6", package = "block2" }
+objc = { version = "=0.3.0-beta.5", package = "objc2" }
+block = { version = "=0.2.0-alpha.8", package = "block2" }
 dispatch = "0.2.0"
 infer = { version = "0.15", optional = true }
 lazy_static = "1.4.0"
@@ -29,6 +29,10 @@ libc = "0.2"
 os_info = "3.0.1"
 url = "2.1.1"
 uuid = { version = "1.1", features = ["v4"], optional = true }
+
+[dependencies.icrate]
+version = "0.0.2"
+features = ["Foundation"]
 
 [dev-dependencies]
 eval = "0.4"

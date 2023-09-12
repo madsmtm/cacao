@@ -2,7 +2,7 @@
 
 use std::ops::Deref;
 
-use objc::foundation::CGFloat;
+use icrate::Foundation::CGFloat;
 use objc::rc::{Id, Shared};
 use objc::runtime::{Class, Object};
 use objc::{class, msg_send, msg_send_id, sel};
@@ -19,7 +19,7 @@ impl Default for Font {
     /// Returns the default `labelFont` on macOS.
     fn default() -> Self {
         let cls = Self::class();
-        let default_size: id = unsafe { msg_send![cls, labelFontSize] };
+        let default_size: CGFloat = unsafe { msg_send![cls, labelFontSize] };
 
         #[cfg(feature = "appkit")]
         let font = Font(unsafe { msg_send_id![cls, labelFontOfSize: default_size] });

@@ -1,8 +1,8 @@
 //! Implements a Select-style dropdown. By default this uses NSPopupSelect on macOS.
 
-use objc::foundation::NSRect;
+use icrate::Foundation::NSRect;
 use objc::rc::{Id, Shared};
-use objc::runtime::{Class, Object};
+use objc::runtime::{Class, Object, Sel};
 use objc::{msg_send, msg_send_id, sel};
 
 use crate::control::Control;
@@ -255,7 +255,8 @@ impl Drop for Select {
     fn drop(&mut self) {
         self.objc.with_mut(|obj| unsafe {
             let _: () = msg_send![obj, setTarget: nil];
-            let _: () = msg_send![obj, setAction: nil];
+            let action: Option<Sel> = None;
+            let _: () = msg_send![obj, setAction: action];
         });
     }
 }

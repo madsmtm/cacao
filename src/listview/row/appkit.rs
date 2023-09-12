@@ -7,6 +7,8 @@
 //! for in the modern era. It also implements a few helpers for things like setting a background
 //! color, and enforcing layer backing by default.
 
+use std::os::raw::c_void;
+
 use objc::rc::{Id, Owned};
 use objc::runtime::{Bool, Class, Object, Sel};
 use objc::{class, msg_send, sel};
@@ -73,7 +75,7 @@ extern "C" fn update_layer(this: &Object, _: Sel) {
 
         if background_color != nil {
             let layer: id = msg_send![this, layer];
-            let cg: id = msg_send![background_color, CGColor];
+            let cg: *mut c_void = msg_send![background_color, CGColor];
             let _: () = msg_send![layer, setBackgroundColor: cg];
         }
     }

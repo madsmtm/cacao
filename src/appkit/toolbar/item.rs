@@ -5,7 +5,7 @@
 
 use std::fmt;
 
-use objc::foundation::NSSize;
+use icrate::Foundation::NSSize;
 use objc::rc::{Id, Owned, Shared};
 use objc::runtime::Object;
 use objc::{class, msg_send, msg_send_id, sel};

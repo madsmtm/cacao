@@ -257,7 +257,7 @@ impl UserDefaults {
     /// ```
     pub fn synchronize(&self) {
         unsafe {
-            let _: () = msg_send![&*self.0, synchronize];
+            let _: bool = msg_send![&*self.0, synchronize];
         }
     }
 }

@@ -1,6 +1,6 @@
 use std::marker::PhantomData;
 use std::ops::{Deref, DerefMut};
-use std::os::raw::c_char;
+use std::os::raw::{c_char, c_void};
 use std::{fmt, slice, str};
 
 use objc::rc::{Id, Owned};
@@ -25,28 +25,29 @@ pub struct NSString<'a> {
 impl<'a> NSString<'a> {
     /// Creates a new `NSString`.
     pub fn new(s: &str) -> Self {
+        let ptr: *const c_void = s.as_ptr().cast();
         NSString {
             objc: unsafe {
                 msg_send_id![
                     msg_send_id![class!(NSString), alloc],
-                    initWithBytes: s.as_ptr(),
+                    initWithBytes: ptr,
                     length: s.len(),
                     encoding: UTF8_ENCODING,
                 ]
             },
-
             phantom: PhantomData
         }
     }
 
     /// Creates a new `NSString` without copying the bytes for the passed-in string.
     pub fn no_copy(s: &'a str) -> Self {
+        let ptr: *const c_void = s.as_ptr().cast();
         NSString {
             objc: unsafe {
                 let nsstring = msg_send_id![class!(NSString), alloc];
                 msg_send_id![
                     nsstring,
-                    initWithBytesNoCopy: s.as_ptr(),
+                    initWithBytesNoCopy: ptr,
                     length: s.len(),
                     encoding: UTF8_ENCODING,
                     freeWhenDone: NO,

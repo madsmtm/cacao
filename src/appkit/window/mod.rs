@@ -10,7 +10,7 @@
 
 use block::ConcreteBlock;
 
-use objc::foundation::{CGFloat, NSRect, NSSize};
+use icrate::Foundation::{CGFloat, NSRect, NSSize};
 use objc::rc::{Id, Owned, Shared};
 use objc::runtime::Object;
 use objc::{class, msg_send, msg_send_id, sel};
@@ -97,7 +97,7 @@ impl Window {
             //
             // Why this isn't a setting on the Toolbar itself I'll never know.
             if os::is_minimum_version(11) {
-                let toolbar_style: NSUInteger = config.toolbar_style.into();
+                let toolbar_style: NSInteger = config.toolbar_style.into();
                 let _: () = msg_send![&*window, setToolbarStyle: toolbar_style];
             }
 
@@ -168,7 +168,7 @@ where
             //
             // Why this isn't a setting on the Toolbar itself I'll never know.
             if os::is_minimum_version(11) {
-                let toolbar_style: NSUInteger = config.toolbar_style.into();
+                let toolbar_style: NSInteger = config.toolbar_style.into();
                 let _: () = msg_send![&*window, setToolbarStyle: toolbar_style];
             }
 
@@ -246,7 +246,7 @@ impl<T> Window<T> {
     pub fn set_autosave_name(&self, name: &str) {
         unsafe {
             let autosave = NSString::new(name);
-            let _: () = msg_send![&*self.objc, setFrameAutosaveName: &*autosave];
+            let _: bool = msg_send![&*self.objc, setFrameAutosaveName: &*autosave];
         }
     }
 
@@ -304,7 +304,7 @@ impl<T> Window<T> {
 
     /// Set the toolbar style
     pub fn set_toolbar_style(&self, style: WindowToolbarStyle) {
-        let style: NSUInteger = style.into();
+        let style: NSInteger = style.into();
         unsafe {
             let _: () = msg_send![&*self.objc, setToolbarStyle: style];
         }

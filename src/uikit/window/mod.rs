@@ -1,4 +1,4 @@
-use objc::foundation::NSRect;
+use icrate::Foundation::NSRect;
 use objc::rc::{Id, Owned};
 use objc::runtime::Object;
 use objc::{class, msg_send, msg_send_id, sel};

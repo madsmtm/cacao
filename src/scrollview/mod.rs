@@ -84,8 +84,8 @@ fn allocate_view(registration_fn: fn() -> &'static Class) -> id {
         {
             let _: () = msg_send![view, setDrawsBackground: NO];
             let _: () = msg_send![view, setWantsLayer: YES];
-            let _: () = msg_send![view, setBorderType:0];
-            let _: () = msg_send![view, setHorizontalScrollElasticity:1];
+            let _: () = msg_send![view, setBorderType: 0usize];
+            let _: () = msg_send![view, setHorizontalScrollElasticity: 1isize];
             let _: () = msg_send![view, setHasVerticalScroller: YES];
         }
 

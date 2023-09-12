@@ -13,44 +13,9 @@ use std::mem;
 
 use objc::ffi;
 use objc::runtime::{Class, Imp, Object, Sel};
-use objc::{class, msg_send, sel, Encode, EncodeArguments, Encoding, Message};
+use objc::{class, msg_send, sel, Encode, Encoding, Message};
 
-use crate::foundation::{id, nil, BOOL, YES, NSString};
-
-/// Types that can be used as the implementation of an Objective-C method.
-pub trait MethodImplementation {
-    /// The callee type of the method.
-    type Callee: Message;
-    /// The return type of the method.
-    type Ret: Encode;
-    /// The argument types of the method.
-    type Args: EncodeArguments;
-
-    /// Returns self as an `Imp` of a method.
-    fn imp(self) -> Imp;
-}
-
-macro_rules! method_decl_impl {
-    (-$s:ident, $r:ident, $f:ty, $($t:ident),*) => (
-        impl<$s, $r $(, $t)*> MethodImplementation for $f
-                where $s: Message, $r: Encode $(, $t: Encode)* {
-            type Callee = $s;
-            type Ret = $r;
-            type Args = ($($t,)*);
-
-            fn imp(self) -> Imp {
-                unsafe { mem::transmute(self) }
-            }
-        }
-    );
-    ($($t:ident),*) => (
-        method_decl_impl!(-T, R, extern "C" fn(&T, Sel $(, $t)*) -> R, $($t),*);
-        method_decl_impl!(-T, R, extern "C" fn(&mut T, Sel $(, $t)*) -> R, $($t),*);
-    );
-}
-
-method_decl_impl!();
-method_decl_impl!(A);
+use crate::foundation::{id, nil, NSString, BOOL, YES};
 
 extern "C" fn get_bundle_id(this: &Object, s: Sel, v: id) -> id {
     unsafe {
@@ -68,10 +33,7 @@ extern "C" fn get_bundle_id(this: &Object, s: Sel, v: id) -> id {
     }
 }
 
-unsafe fn swizzle_bundle_id<F>(bundle_id: &str, func: F)
-where
-    F: MethodImplementation<Callee = Object>,
-{
+unsafe fn swizzle_bundle_id(bundle_id: &str, func: extern "C" fn(&Object, Sel, id) -> R) {
     let name = CString::new("NSBundle").unwrap();
     let cls = ffi::objc_getClass(name.as_ptr());
 
@@ -82,8 +44,8 @@ where
     let added = ffi::class_addMethod(
         cls as *mut ffi::objc_class,
         sel!(__bundleIdentifier).as_ptr(),
-        func.imp(),
-        CString::new("*@:").unwrap().as_ptr(),
+        std::mem::transmute(func),
+        CString::new("*@:").unwrap().as_ptr()
     );
 
     let method1 = ffi::class_getInstanceMethod(cls, sel!(bundleIdentifier).as_ptr()) as *mut ffi::objc_method;
@@ -93,6 +55,6 @@ where
 
 pub fn set_bundle_id(bundle_id: &str) {
     unsafe {
-        swizzle_bundle_id(bundle_id, get_bundle_id as extern "C" fn(&Object, _, _) -> id);
+        swizzle_bundle_id(bundle_id, get_bundle_id as extern "C" fn(_, _, _) -> _);
     }
 }

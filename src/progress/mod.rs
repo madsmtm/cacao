@@ -15,7 +15,7 @@
 //! my_view.add_subview(&indicator);
 //! ```
 
-use objc::foundation::CGFloat;
+use icrate::Foundation::CGFloat;
 use objc::rc::{Id, Shared};
 use objc::runtime::{Class, Object};
 use objc::{class, msg_send, sel};

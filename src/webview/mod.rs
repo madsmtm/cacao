@@ -13,7 +13,7 @@
 //! Apple does not ship `WKWebView` on tvOS, and as a result this control is not provided on that
 //! platform.
 
-use objc::foundation::NSRect;
+use icrate::Foundation::NSRect;
 use objc::rc::{Id, Owned, Shared};
 use objc::runtime::Object;
 use objc::{class, msg_send, msg_send_id, sel};
@@ -300,7 +300,7 @@ impl<T> WebView<T> {
         self.objc.with_mut(|obj| unsafe {
             let u: id = msg_send![class!(NSURL), URLWithString:&*url];
             let request: id = msg_send![class!(NSURLRequest), requestWithURL: u];
-            let _: () = msg_send![&*obj, loadRequest: request];
+            let _: id = msg_send![&*obj, loadRequest: request];
         });
     }
 

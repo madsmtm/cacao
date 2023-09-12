@@ -3,7 +3,7 @@ use std::ops::{Deref, DerefMut, Range};
 use std::os::raw::c_char;
 use std::{fmt, slice, str};
 
-use objc::foundation::NSRange;
+use icrate::Foundation::NSRange;
 use objc::rc::{Id, Owned};
 use objc::runtime::Object;
 use objc::{class, msg_send, msg_send_id, sel};

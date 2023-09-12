@@ -123,7 +123,7 @@ pub enum WindowToolbarStyle {
     UnifiedCompact
 }
 
-impl From<WindowToolbarStyle> for NSUInteger {
+impl From<WindowToolbarStyle> for NSInteger {
     fn from(mode: WindowToolbarStyle) -> Self {
         match mode {
             WindowToolbarStyle::Automatic => 0,

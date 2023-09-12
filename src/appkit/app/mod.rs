@@ -291,9 +291,9 @@ impl App {
     /// @TODO: Accept an ActivationPolicy enum or something.
     pub fn activate() {
         shared_application(|app| unsafe {
-            let _: () = msg_send![app, setActivationPolicy:0];
+            let _: bool = msg_send![app, setActivationPolicy: 0isize];
             let current_app: id = msg_send![class!(NSRunningApplication), currentApplication];
-            let _: () = msg_send![current_app, activateWithOptions:1<<1];
+            let _: bool = msg_send![current_app, activateWithOptions: 1usize << 1];
         });
     }
 

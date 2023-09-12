@@ -1,6 +1,6 @@
 //! Wrapper methods for various geometry types (rects, sizes, ec).
 
-use objc::foundation::{NSPoint, NSRect, NSSize};
+use icrate::Foundation::{NSPoint, NSRect, NSSize};
 
 /// A struct that represents a box - top, left, width and height. You might use this for, say,
 /// setting the initial frame of a view.
@@ -61,8 +61,8 @@ impl From<NSRect> for Rect {
         Rect {
             top: rect.origin.y as f64,
             left: rect.origin.x as f64,
-            width: rect.size.width() as f64,
-            height: rect.size.height() as f64
+            width: rect.size.width as f64,
+            height: rect.size.height as f64
         }
     }
 }

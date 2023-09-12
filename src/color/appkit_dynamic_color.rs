@@ -10,7 +10,9 @@
 //! that enables this functionality, we want to be able to provide this with some level of
 //! backwards compatibility for Mojave, as that's still a supported OS.
 
-use objc::foundation::CGFloat;
+use std::os::raw::c_void;
+
+use icrate::Foundation::CGFloat;
 use objc::runtime::{Class, Object, Sel};
 use objc::{class, msg_send, sel};
 
@@ -103,7 +105,7 @@ extern "C" fn number_of_components(this: &Object, _: Sel) -> NSInteger {
 }
 
 // @TODO: Confirm this.
-extern "C" fn get_components(this: &Object, _: Sel, components: CGFloat) {
+extern "C" fn get_components(this: &Object, _: Sel, components: *mut CGFloat) {
     let color = get_effective_color(this);
     unsafe {
         let _: () = msg_send![color, getComponents: components];
@@ -111,7 +113,7 @@ extern "C" fn get_components(this: &Object, _: Sel, components: CGFloat) {
 }
 
 // @TODO: Confirm this.
-extern "C" fn get_rgba(this: &Object, _: Sel, red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+extern "C" fn get_rgba(this: &Object, _: Sel, red: *mut CGFloat, green: *mut CGFloat, blue: *mut CGFloat, alpha: *mut CGFloat) {
     let color = get_effective_color(this);
     unsafe {
         let _: () = msg_send![color, getRed:red green:green blue:blue alpha:alpha];
@@ -149,7 +151,7 @@ extern "C" fn brightness_component(this: &Object, _: Sel) -> CGFloat {
 }
 
 // @TODO: Confirm this.
-extern "C" fn get_hsba(this: &Object, _: Sel, hue: CGFloat, sat: CGFloat, brit: CGFloat, alpha: CGFloat) {
+extern "C" fn get_hsba(this: &Object, _: Sel, hue: *mut CGFloat, sat: *mut CGFloat, brit: *mut CGFloat, alpha: *mut CGFloat) {
     let color = get_effective_color(this);
     unsafe {
         let _: () = msg_send![color, getHue:hue saturation:sat brightness:brit alpha:alpha];
@@ -162,7 +164,7 @@ extern "C" fn white_component(this: &Object, _: Sel) -> CGFloat {
 }
 
 // @TODO: Confirm this.
-extern "C" fn get_white(this: &Object, _: Sel, white: CGFloat, alpha: CGFloat) {
+extern "C" fn get_white(this: &Object, _: Sel, white: *mut CGFloat, alpha: *mut CGFloat) {
     let color = get_effective_color(this);
     unsafe {
         let _: () = msg_send![color, getWhite:white alpha:alpha];
@@ -190,7 +192,15 @@ extern "C" fn black_component(this: &Object, _: Sel) -> CGFloat {
 }
 
 // @TODO: Confirm this.
-extern "C" fn get_cmyk(this: &Object, _: Sel, c: CGFloat, m: CGFloat, y: CGFloat, k: CGFloat, a: CGFloat) {
+extern "C" fn get_cmyk(
+    this: &Object,
+    _: Sel,
+    c: *mut CGFloat,
+    m: *mut CGFloat,
+    y: *mut CGFloat,
+    k: *mut CGFloat,
+    a: *mut CGFloat
+) {
     let color = get_effective_color(this);
     unsafe {
         let _: () = msg_send![color, getCyan:c magenta:m yellow:y black:k alpha:a];
@@ -202,7 +212,7 @@ extern "C" fn alpha_component(this: &Object, _: Sel) -> CGFloat {
     unsafe { msg_send![color, alphaComponent] }
 }
 
-extern "C" fn cg_color(this: &Object, _: Sel) -> id {
+extern "C" fn cg_color(this: &Object, _: Sel) -> *mut c_void {
     let color = get_effective_color(this);
     unsafe { msg_send![color, CGColor] }
 }

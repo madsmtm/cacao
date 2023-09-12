@@ -1,7 +1,7 @@
 //! Various traits related to controllers opting in to autolayout routines and support for view
 //! heirarchies.
 
-use objc::foundation::{CGFloat, NSRect};
+use icrate::Foundation::{CGFloat, NSRect};
 use objc::rc::{Id, Shared};
 use objc::runtime::Object;
 use objc::{msg_send, sel};

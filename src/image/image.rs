@@ -1,6 +1,6 @@
 use std::ffi::c_void;
 
-use objc::foundation::{CGFloat, NSPoint, NSRect, NSSize};
+use icrate::Foundation::{CGFloat, NSPoint, NSRect, NSSize};
 use objc::rc::{Id, Shared};
 use objc::runtime::{Bool, Class, Object};
 use objc::{class, msg_send, msg_send_id, sel};
@@ -64,8 +64,8 @@ impl ResizeBehavior {
             return source;
         }
 
-        let mut scale_width = (target.size.width() / source.size.width()).abs();
-        let mut scale_height = (target.size.height() / source.size.height()).abs();
+        let mut scale_width = (target.size.width / source.size.width).abs();
+        let mut scale_height = (target.size.height / source.size.height).abs();
 
         match self {
             ResizeBehavior::AspectFit => {
@@ -86,12 +86,12 @@ impl ResizeBehavior {
             }
         }
 
-        let result_size = NSSize::new(source.size.width() * scale_width, source.size.height() * scale_height);
+        let result_size = NSSize::new(source.size.width * scale_width, source.size.height * scale_height);
 
         NSRect::new(
             NSPoint::new(
-                target.origin.x + (target.size.width() - result_size.width()) / 2.,
-                target.origin.y + (target.size.height() - result_size.height()) / 2.
+                target.origin.x + (target.size.width - result_size.width) / 2.,
+                target.origin.y + (target.size.height - result_size.height) / 2.
             ),
             result_size
         )
@@ -269,8 +269,8 @@ impl Image {
             // TODO: Automatically scale for the user
             // cg_context_ptr.translate(resized_frame.origin.x, resized_frame.origin.y);
             // cg_context_ptr.scale(
-            //     resized_frame.size.width() / config.source.0,
-            //     resized_frame.size.height() / config.source.1
+            //     resized_frame.size.width / config.source.0,
+            //     resized_frame.size.height / config.source.1
             // );
 
             let result = handler(

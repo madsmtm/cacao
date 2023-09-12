@@ -44,7 +44,7 @@
 
 use std::collections::HashMap;
 
-use objc::foundation::CGFloat;
+use icrate::Foundation::CGFloat;
 use objc::rc::{Id, Owned, Shared};
 use objc::runtime::{Class, Object};
 use objc::{class, msg_send, msg_send_id, sel};
@@ -116,8 +116,8 @@ fn common_init(class: &Class) -> id {
             let _: () = msg_send![tableview, setUsesAutomaticRowHeights: YES];
             let _: () = msg_send![tableview, setFloatsGroupRows: YES];
             //let _: () = msg_send![tableview, setIntercellSpacing: NSSize::new(0., 0.)];
-            let _: () = msg_send![tableview, setColumnAutoresizingStyle:1];
-            //msg_send![tableview, setSelectionHighlightStyle:-1];
+            let _: () = msg_send![tableview, setColumnAutoresizingStyle:1usize];
+            //msg_send![tableview, setSelectionHighlightStyle: -1isize];
             //let _: () = msg_send![tableview, setAllowsMultipleSelection:NO];
             let _: () = msg_send![tableview, setHeaderView: nil];
 
@@ -125,7 +125,7 @@ fn common_init(class: &Class) -> id {
             let identifier = NSString::no_copy("CacaoListViewColumn");
             let default_column_alloc: id = msg_send![class!(NSTableColumn), new];
             let default_column: id = msg_send![default_column_alloc, initWithIdentifier:&*identifier];
-            let _: () = msg_send![default_column, setResizingMask:(1<<0)];
+            let _: () = msg_send![default_column, setResizingMask: 1usize << 0];
             let _: () = msg_send![tableview, addTableColumn: default_column];
         }
 
@@ -603,7 +603,7 @@ impl<T> ListView<T> {
             let index_set: Id<Object, Shared> = index_set.into();
             let x = index_set.clone();
 
-            let y: Id<Object, Shared> = msg_send_id![class!(NSIndexSet), indexSetWithIndex:0];
+            let y: Id<Object, Shared> = msg_send_id![class!(NSIndexSet), indexSetWithIndex:0usize];
 
             // Must use `get` to avoid a double lock.
             self.objc.get(|obj| {

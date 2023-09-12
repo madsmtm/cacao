@@ -72,8 +72,8 @@ extern "C" fn start_url_scheme_task<T: WebViewDelegate>(this: &Object, _: Sel, _
                 nsurlresponse,
                 initWithURL: url,
                 MIMEType: &*NSString::new(&mime),
-                expectedContentLength: content.len(),
-                textEncodingName: null::<c_void>(),
+                expectedContentLength: content.len() as isize,
+                textEncodingName: nil,
             ];
             let _: () = msg_send![task, didReceiveResponse: response];
 

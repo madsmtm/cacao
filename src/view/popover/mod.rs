@@ -1,4 +1,4 @@
-use objc::foundation::{NSRect, NSSize};
+use icrate::Foundation::{NSRect, NSSize};
 use objc::rc::{Id, Shared};
 use objc::runtime::Object;
 use objc::{class, msg_send, msg_send_id, sel};
@@ -79,7 +79,7 @@ impl<Content> Popover<Content> {
         let rect: NSRect = relative_to.into();
         unsafe {
             view.with_backing_obj_mut(|obj| {
-                let _: () = msg_send![&*self.objc, showRelativeToRect:rect ofView: &*obj preferredEdge: edge as u32];
+                let _: () = msg_send![&*self.objc, showRelativeToRect:rect ofView: &*obj preferredEdge: edge as usize];
             });
         }
     }
@@ -91,7 +91,7 @@ impl<Content> Popover<Content> {
         unsafe {
             let content_view = window.content_view();
             let rect: NSRect = rect.into();
-            let _: () = msg_send![&*self.objc, showRelativeToRect:rect ofView: content_view preferredEdge: edge as u32];
+            let _: () = msg_send![&*self.objc, showRelativeToRect:rect ofView: content_view preferredEdge: edge as usize];
         }
     }
 }

@@ -22,7 +22,7 @@
 //! ```
 
 use objc::rc::{Id, Shared};
-use objc::runtime::{Class, Object};
+use objc::runtime::{Class, Object, Sel};
 use objc::{msg_send, msg_send_id, sel};
 
 pub use enums::*;
@@ -124,9 +124,10 @@ impl Button {
         let title = NSString::new(text);
 
         let view: id = unsafe {
+            let action: Option<Sel> = None;
             let button: id = msg_send![register_class(), buttonWithTitle:&*title
-                target:nil
-                action:nil
+                target: nil
+                action: action
             ];
 
             let _: () = msg_send![button, setWantsLayer: YES];
@@ -345,7 +346,8 @@ impl Drop for Button {
     fn drop(&mut self) {
         self.objc.with_mut(|obj| unsafe {
             let _: () = msg_send![obj, setTarget: nil];
-            let _: () = msg_send![obj, setAction: nil];
+            let action: Option<Sel> = None;
+            let _: () = msg_send![obj, setAction: action];
         });
     }
 }

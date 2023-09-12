@@ -2,7 +2,7 @@
 //! that this will change at some point.
 
 use objc::rc::{Id, Shared};
-use objc::runtime::{Class, Object};
+use objc::runtime::{Class, Object, Sel};
 use objc::{msg_send, msg_send_id, sel};
 
 use crate::foundation::{id, load_or_register_class, nil, NSString, NO};
@@ -69,13 +69,14 @@ impl Switch {
         let title = NSString::new(text);
 
         let view: id = unsafe {
-            let button: id = msg_send![register_class(), buttonWithTitle: &*title, target: nil, action: nil];
+            let action: Option<Sel> = None;
+            let button: id = msg_send![register_class(), buttonWithTitle: &*title, target: nil, action: action];
 
             #[cfg(feature = "autolayout")]
             let _: () = msg_send![button, setTranslatesAutoresizingMaskIntoConstraints: NO];
 
             #[cfg(feature = "appkit")]
-            let _: () = msg_send![button, setButtonType:3];
+            let _: () = msg_send![button, setButtonType:3usize];
 
             button
         };
@@ -122,8 +123,8 @@ impl Switch {
             // @TODO: The constants to use here changed back in 10.13ish, so... do we support that,
             // or just hide it?
             let _: () = msg_send![obj, setState:match checked {
-                true => 1,
-                false => 0
+                true => 1isize,
+                false => 0isize
             }];
         });
     }
@@ -165,7 +166,8 @@ impl Drop for Switch {
     fn drop(&mut self) {
         self.objc.with_mut(|obj| unsafe {
             let _: () = msg_send![obj, setTarget: nil];
-            let _: () = msg_send![obj, setAction: nil];
+            let action: Option<Sel> = None;
+            let _: () = msg_send![obj, setAction: action];
         });
     }
 }

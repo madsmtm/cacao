@@ -114,10 +114,11 @@ impl SegmentedControl {
     /// and retains the necessary Objective-C runtime pointer.
     pub fn new(images: NSArray, tracking_mode: TrackingMode) -> Self {
         let view: id = unsafe {
-            let tracking_mode = tracking_mode as u8 as i32;
+            let tracking_mode = tracking_mode as u8 as usize;
+            let action: Option<Sel> = None;
             let control: id = msg_send![register_class(), segmentedControlWithImages:&*images trackingMode:tracking_mode
                 target:nil
-                action:nil
+                action: action
             ];
 
             let _: () = msg_send![control, setWantsLayer: YES];
@@ -191,11 +192,11 @@ impl SegmentedControl {
 
     /// Attaches a callback for button press events. Don't get too creative now...
     /// best just to message pass or something.
-    pub fn set_action<F: Fn(i32) + Send + Sync + 'static>(&mut self, action: F) {
+    pub fn set_action<F: Fn(isize) + Send + Sync + 'static>(&mut self, action: F) {
         // @TODO: This probably isn't ideal but gets the job done for now; needs revisiting.
         let this: Id<_, Shared> = self.objc.get(|obj| unsafe { msg_send_id![obj, self] });
         let handler = TargetActionHandler::new(&*this, move |obj: *const Object| unsafe {
-            let selected: i32 = msg_send![obj, selectedSegment];
+            let selected: isize = msg_send![obj, selectedSegment];
             action(selected)
         });
         self.handler = Some(handler);
@@ -325,7 +326,8 @@ impl Drop for SegmentedControl {
     fn drop(&mut self) {
         self.objc.with_mut(|obj| unsafe {
             let _: () = msg_send![obj, setTarget: nil];
-            let _: () = msg_send![obj, setAction: nil];
+            let action: Option<Sel> = None;
+            let _: () = msg_send![obj, setAction: action];
         });
     }
 }
